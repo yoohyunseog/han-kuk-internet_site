@@ -56,7 +56,7 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40, $cache_time=
         $sql = " select * from {$g5['board_table']} where bo_table = '{$bo_table}' ";
         $board = sql_fetch($sql);
         $bo_subject = get_text($board['bo_subject']);
-
+        $bo_1 = get_text($board['bo_1']);
         $tmp_write_table = $g5['write_prefix'] . $bo_table; // 게시판 테이블 전체이름
         $sql = " select * from {$tmp_write_table} where wr_is_comment = 0 order by wr_num limit 0, {$rows} ";
         $result = sql_query($sql);
@@ -66,7 +66,7 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40, $cache_time=
 
         if($cache_fwrite) {
             $handle = fopen($cache_file, 'w');
-            $cache_content = "<?php\nif (!defined('_GNUBOARD_')) exit;\n\$bo_subject='".$bo_subject."';\n\$list=".var_export($list, true)."?>";
+            $cache_content = "<?php\nif (!defined('_GNUBOARD_')) exit;\n\$bo_subject='".$bo_subject."';\n\$bo_1='".$bo_1."';\n\$list=".var_export($list, true)."?>";
             fwrite($handle, $cache_content);
             fclose($handle);
         }
