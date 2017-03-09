@@ -55,7 +55,7 @@ if (isset($_GET['q']) && isset($_GET['maxResults'])) {
   $publishedAfter = '2017-01-01T00:00:00Z';
   $publishedBefore = '2017-03-01T00:00:00Z';
   $check=1;
-  
+  $_GET['q'] = $bo_subject;
   try {
 
     // Call the search.list method to retrieve results matching the specified
@@ -101,10 +101,8 @@ END;
       htmlspecialchars($e->getMessage()));
   }
 }
-
-
 ?>
-    <div class="lt_more"><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $bo_table ?>"><span class="sound_only"><?php echo $bo_subject ?></span>더보기</a></div>
+    <div class="lt_more"><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $bo_table ?>"><span class="sound_only"><?php echo '제목:'.$bo_subject ?></span>더보기</a></div>
 </div>
 <!-- } <?php echo $bo_subject; ?> 최신글 끝 -->
 <?=$htmlBody?>
