@@ -33,7 +33,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         // 사용방법 : latest(스킨, 게시판아이디, 출력라인, 글자수);
         // 테마의 스킨을 사용하려면 theme/basic 과 같이 지정
        
-        echo latest('theme/hankukinternet', $row['bo_table'], 5, 25);
+        echo latest('theme/basic', $row['bo_table'], 5, 25);
         $count++;
         ?>
     </div>
