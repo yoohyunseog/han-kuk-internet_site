@@ -43,7 +43,7 @@ $(document).ready(function(){
    		});
  	 
 		query = number_format(query);
-	$("#hdtest"+(i)+"_"+n).text(query);
+	$("#hdtest"+(i)+"_"+n).text("조회수:"+query);
  			}
  	 	}
  	}
