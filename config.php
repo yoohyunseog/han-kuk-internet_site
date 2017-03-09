@@ -26,8 +26,8 @@ if (PHP_VERSION >= '5.1.0') {
 보안서버주소가 없다면 공란으로 두시면 되며 보안서버주소 뒤에 / 는 붙이지 않습니다.
 입력예) https://www.domain.com:443/gnuboard5
 */
-define('G5_DOMAIN', '');
-define('G5_HTTPS_DOMAIN', '');
+define('G5_DOMAIN', 'http://todu7.iptime.org/ITEM-INTEGER/MANAGEMENT/PROJECT-SUB/www/HANKUKINTERNET_SITE1');
+define('G5_HTTPS_DOMAIN', 'http://todu7.iptime.org/ITEM-INTEGER/MANAGEMENT/PROJECT-SUB/www/HANKUKINTERNET_SITE1');
 
 /*
 www.sir.kr 과 sir.kr 도메인은 서로 다른 도메인으로 인식합니다. 쿠키를 공유하려면 .sir.kr 과 같이 입력하세요.
@@ -68,13 +68,13 @@ if (G5_DOMAIN) {
     if (isset($g5_path['url']))
         define('G5_URL', $g5_path['url']);
     else
-        define('G5_URL', '');
+        define('G5_URL', 'http://todu7.iptime.org/ITEM-INTEGER/MANAGEMENT/PROJECT-SUB/www/HANKUKINTERNET_SITE1');
 }
 
 if (isset($g5_path['path'])) {
     define('G5_PATH', $g5_path['path']);
 } else {
-    define('G5_PATH', '');
+    define('G5_PATH', 'http://todu7.iptime.org/ITEM-INTEGER/MANAGEMENT/PROJECT-SUB/www/HANKUKINTERNET_SITE1');
 }
 
 define('G5_ADMIN_URL',      G5_URL.'/'.G5_ADMIN_DIR);
