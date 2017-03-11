@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<script>
+$(document).ready(function(){
+	var key = 'AIzaSyClUC-kVxJtYDxjraNMHEOebqn032h_-1M';
+	var str = '헌재가미친날!';
+	var dataSub; 
+	$.ajax({
+        type: 'GET',
+        url: "https://www.googleapis.com/youtube/v3/search?part=id%2C+snippet&q="+str+"&fields=items&key="+key,
+        async: false,
+        success: function(data) {
+        	 if(data != null) {
+        		 console.log(data);
+             	}
+        	 dataSub = data;
+        	}
+   		});
+	 $("#data").text(dataSub.items[0].etag);
+     
+});
+</script>
+
+</head>
+
+<body>
+<div id="data"></div>
+</body>
+
+</html>

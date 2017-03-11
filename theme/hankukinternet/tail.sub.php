@@ -32,7 +32,7 @@ $(document).ready(function(){
  	 	 	if($(name).length){
 	$.ajax({
         type: 'GET',
-        url: 'https://www.googleapis.com/youtube/v3/videos?part=statistics&id='+$(name).val()+'&key=AIzaSyB8iIcd6fUMjuJNWxzLyAI1Ub92UWgnSfQ',
+        url: 'https://www.googleapis.com/youtube/v3/videos?part=statistics&id='+$(name).val()+'&key=AIzaSyClUC-kVxJtYDxjraNMHEOebqn032h_-1M',
         async: false,
         success: function(data) {
         	 if(data != null) {

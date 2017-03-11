@@ -11,7 +11,7 @@ include_once(G5_THEME_PATH.'/head.php');
 
 ?>
 
-<h2 class="sound_only">최신글</h2>
+<h2 class="sound_only">최신글ㅁ</h2>
 <!-- 최신글 시작 { -->
 <?php
 //  최신글
@@ -33,7 +33,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         // 사용방법 : latest(스킨, 게시판아이디, 출력라인, 글자수);
         // 테마의 스킨을 사용하려면 theme/basic 과 같이 지정
        
-        echo latest('theme/hankukinternet_skin', $row['bo_table'], 5, 25);
+        echo latest('theme/hankukinternet_search', $row['bo_table'], 5, 25);
         $count++;
         ?>
     </div>
