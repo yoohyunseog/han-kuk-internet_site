@@ -19,7 +19,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
  */
 
 
-
 if (!file_exists(__DIR__ . '/vendor/autoload.php')) {
   throw new \Exception('please run "composer require google/apiclient:~2.0" in "' . __DIR__ .'"');
 }
@@ -47,7 +46,7 @@ if (isset($_GET['q']) && isset($_GET['maxResults'])) {
    * {{ Google Cloud Console }} <{{ https://cloud.google.com/console }}>
    * Please ensure that you have enabled the YouTube Data API for your project.
    */
-  $DEVELOPER_KEY = 'AIzaSyBJVHhh3kSRdHTpFz3zZ-59bCsOgUBwXhw';
+  $DEVELOPER_KEY = 'AIzaSyB8iIcd6fUMjuJNWxzLyAI1Ub92UWgnSfQ';
 
   $client = new Google_Client();
   $client->setDeveloperKey($DEVELOPER_KEY);

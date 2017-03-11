@@ -38,7 +38,7 @@ $htmlBody = <<<END
 </form>
 END;
 $_GET['q'] = $bo_1;
-$_GET['maxResults'] = 45;
+$_GET['maxResults'] = 6;
 // This code will execute if the user entered a search query in the form
 // and submitted the form. Otherwise, the page displays the form above.
 if (isset($_GET['q']) && isset($_GET['maxResults'])) {
@@ -47,7 +47,7 @@ if (isset($_GET['q']) && isset($_GET['maxResults'])) {
    * {{ Google Cloud Console }} <{{ https://cloud.google.com/console }}>
    * Please ensure that you have enabled the YouTube Data API for your project.
    */
-  $DEVELOPER_KEY = 'AIzaSyBJVHhh3kSRdHTpFz3zZ-59bCsOgUBwXhw';
+  $DEVELOPER_KEY = 'AIzaSyB8iIcd6fUMjuJNWxzLyAI1Ub92UWgnSfQ';
 
   $client = new Google_Client();
   $client->setDeveloperKey($DEVELOPER_KEY);
