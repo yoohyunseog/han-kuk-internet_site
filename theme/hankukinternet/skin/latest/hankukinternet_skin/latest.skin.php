@@ -5,69 +5,59 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 add_stylesheet('<link rel="stylesheet" href="'.$latest_skin_url.'/style.css">', 0);
 ?>
 <script>
-function movie() {
-	var query;
-	var key = 'AIzaSyClUC-kVxJtYDxjraNMHEOebqn032h_-1M';
+
+	//페이지 데이터 모두 로딩되면 로드
+	$(window).on('load',function(){
+		var key = '<?=$bo_10?>';
+		var str = '헌재가미친날!';
+		var dataSub;
+		setTimeout(function(){dataload()},300);
+
+		function dataload(){ 
+		$.ajax({
+	        type: 'GET',
+	        url: "https://www.googleapis.com/youtube/v3/search?part=id,snippet&q="+str+"&fields=items&key="+key,
+	        async: false,
+	        success: function(data) {
+	        	 if(data != null) {
+	        		 console.log(data);
+	             	}
+	        	 dataSub = data;
+	        	}
+	   		});
+
+		 //$("#data").text(dataSub.items[0].snippet.title);
+		 var str1 = dataSub.items[0].snippet.title;
+		$(".lt ul").append("<li>"+str1+"</li>");
+		}
+
+		
+	});
+	</script>
 	
-/*    $.get(
-    	"https://www.googleapis.com/youtube/v3/videos", {
-            part: 'statistics',
-            id:id,
-            key: gapikey
-            	
-        }, function(data) {
-            query = data;
-        });*/
-
-        $.ajax({
-            type: 'GET',
-            url: 'https://www.googleapis.com/youtube/v3/videos?part=statistics&id='+str[i]+'&key='+key,
-            async: false,
-            success: function(data) {
-            	 if(data != null) {
-            		 console.log(data);
-                 	}
-            		 query = data.items[0].statistics.viewCount;
-            	}
-       		});
-   
-    return query;
+<style>
+#vidos_ul li{
+	width:150px; 
+	height:150px;
+	float:left;
+	overflow: hidden; 
+	text-overflow: ellipsis;
+	white-space: nowrap; 
 }
-
-</script>
+#vidos_ul li img {
+	width:150px;
+}
+.lt{
+	width:100%;
+	height:auto;
+}
+</style>	
+	
 <!-- <?php echo $bo_subject; ?> 최신글 시작 { -->
 <div class="lt">
     <strong class="lt_title"><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $bo_table ?>"><?php echo $bo_subject; ?></a></strong>
     <ul>
-    <?php for ($i=0; $i<count($list); $i++) {  ?>
-        <li>
-            <?php
-            //echo $list[$i]['icon_reply']." ";
-            echo "<a href=\"".$list[$i]['href']."\">";
-            if ($list[$i]['is_notice'])
-                echo "<strong>".$list[$i]['subject']."</strong>";
-            else
-                echo $list[$i]['subject'];
-
-            if ($list[$i]['comment_cnt'])
-                echo $list[$i]['comment_cnt'];
-
-            echo "</a>";
-
-            // if ($list[$i]['link']['count']) { echo "[{$list[$i]['link']['count']}]"; }
-            // if ($list[$i]['file']['count']) { echo "<{$list[$i]['file']['count']}>"; }
-
-            if (isset($list[$i]['icon_new'])) echo " " . $list[$i]['icon_new'];
-            if (isset($list[$i]['icon_hot'])) echo " " . $list[$i]['icon_hot'];
-            if (isset($list[$i]['icon_file'])) echo " " . $list[$i]['icon_file'];
-            if (isset($list[$i]['icon_link'])) echo " " . $list[$i]['icon_link'];
-            if (isset($list[$i]['icon_secret'])) echo " " . $list[$i]['icon_secret'];
-             ?>
-        </li>
-    <?php }  ?>
-    <?php if (count($list) == 0) { //게시물이 없을 때  ?>
-    <li>게시물이 없습니다.</li>
-    <?php }  ?>
+    
     </ul>
     <div class="lt_more"><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $bo_table ?>"><span class="sound_only"><?php echo $bo_subject ?></span>더보기</a></div>
 </div>

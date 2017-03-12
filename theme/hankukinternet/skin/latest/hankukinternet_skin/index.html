@@ -8,12 +8,13 @@
 
 <script>
 $(document).ready(function(){
+	
 	var key = 'AIzaSyClUC-kVxJtYDxjraNMHEOebqn032h_-1M';
 	var str = '헌재가미친날!';
 	var dataSub; 
 	$.ajax({
         type: 'GET',
-        url: "https://www.googleapis.com/youtube/v3/search?part=id%2C+snippet&q="+str+"&fields=items&key="+key,
+        url: "https://www.googleapis.com/youtube/v3/search?part=id,snippet&q="+str+"&fields=items&key="+key,
         async: false,
         success: function(data) {
         	 if(data != null) {
@@ -22,7 +23,7 @@ $(document).ready(function(){
         	 dataSub = data;
         	}
    		});
-	 $("#data").text(dataSub.items[0].etag);
+	 $("#data").text(dataSub.items[0].snippet.title);
      
 });
 </script>

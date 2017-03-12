@@ -38,7 +38,7 @@ $htmlBody = <<<END
 </form>
 END;
 $_GET['q'] = $bo_1;
-$_GET['maxResults'] = 6;
+$_GET['maxResults'] = 1;
 // This code will execute if the user entered a search query in the form
 // and submitted the form. Otherwise, the page displays the form above.
 if (isset($_GET['q']) && isset($_GET['maxResults'])) {
@@ -47,7 +47,7 @@ if (isset($_GET['q']) && isset($_GET['maxResults'])) {
    * {{ Google Cloud Console }} <{{ https://cloud.google.com/console }}>
    * Please ensure that you have enabled the YouTube Data API for your project.
    */
-  $DEVELOPER_KEY = 'AIzaSyClUC-kVxJtYDxjraNMHEOebqn032h_-1M';
+  $DEVELOPER_KEY = $bo_10;
 
   $client = new Google_Client();
   $client->setDeveloperKey($DEVELOPER_KEY);
@@ -61,9 +61,10 @@ if (isset($_GET['q']) && isset($_GET['maxResults'])) {
   $publishedAfter = '2017-01-01T00:00:00Z';
   $publishedBefore = '2017-03-01T00:00:00Z';
   $check=1;
+  $array_movie = array("조작된 도시","공조","트리플 엑스 리턴즈", "더 킹", "컨택트", "발레리나", "50가지 그림자: 심연", "모아나");
   
   try {
-
+  	
     // Call the search.list method to retrieve results matching the specified
     // query term.
     $searchResponse = $youtube->search->listSearch('id,snippet', array(
@@ -85,7 +86,7 @@ if (isset($_GET['q']) && isset($_GET['maxResults'])) {
         	$jsonURL = file_get_contents("https://www.googleapis.com/youtube/v3/videos?id={$video_ID}&key={$DEVELOPER_KEY}&part=statistics");
         	$json = json_decode($jsonURL);
         	$views = $json->{'items'}[0]->{'statistics'}->{'viewCount'}; */
-        	$videos .= sprintf('<param id="%s_%s" value="%s"><li><img src="%s"><br>%s <br>날짜:%s <br><hd id="hd%s_%s">조회수:0</hd></li>',$bo_table,$count,$searchResult['id']['videoId'],$searchResult['snippet']['thumbnails']['medium']['url'],
+        	$videos .= sprintf('<param id="%s_%s" value="%s"><li id="li_%s"><img src="%s"><br>%s <br>날짜:%s <br><hd id="hd%s_%s">조회수:0</hd></li>',$bo_table,$count,$searchResult['id']['videoId'],$i,$searchResult['snippet']['thumbnails']['medium']['url'],
         			$searchResult['snippet']['title'],$searchResult['snippet']['publishedAt'],$bo_table,$count);
         	$count++;
          break;
