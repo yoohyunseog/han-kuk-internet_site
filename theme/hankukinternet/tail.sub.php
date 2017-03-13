@@ -23,11 +23,13 @@ $(function() {
 </body>
 </html>
 <script>
-$(document).ready(function(){
+$(window).on(load,function(){
 	var query;
 	var count = <?=$count?>;
+	var checkpoint = '<?=$checkPoint?>';
+	
  	for(var i = 0; i<count; i++){
- 	 	for(var n = 0; n<<?=$checkPoint?>; n++){
+ 	 	for(var n = 0; n<checkpoint; n++){
  	 	 	var name = "#test"+i+"_"+n;
  	 	 	if($(name).length){
 	$.ajax({
@@ -41,9 +43,8 @@ $(document).ready(function(){
         		 query = data.items[0].statistics.viewCount;
         	}
    		});
- 	 
 		query = number_format(query);
-	$("#hdtest"+(i)+"_"+n).text("조회수:"+query);
+		$("#hdtest"+(i)+"_"+n).text("조회수:"+query);
  			}
  	 	}
  	}
