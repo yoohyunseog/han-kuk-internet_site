@@ -14,7 +14,7 @@ $(document).ready(function(){
 	var dataSub; 
 	$.ajax({
         type: 'GET',
-        url: "https://www.googleapis.com/youtube/v3/search?part=id,snippet&q="+str+"&fields=items&key="+key,
+        url: "https://www.googleapis.com/youtube/v3/search?part=id,snippet&maxResults=10&q="+str+"&fields=items&key="+key,
         async: false,
         success: function(data) {
         	 if(data != null) {
@@ -24,7 +24,7 @@ $(document).ready(function(){
         	}
    		});
 	 $("#data").text(dataSub.items[0].snippet.title);
-     
+	 $("#data").text(dataSub.items[0].thumbnails['default']);
 });
 </script>
 
