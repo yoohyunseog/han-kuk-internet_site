@@ -22,40 +22,6 @@ $(function() {
 
 </body>
 </html>
-<script>
-$(window).on(load,function(){
-	var query;
-	var count = <?=$count?>;
-	var checkpoint = '<?=$checkPoint?>';
-	
- 	for(var i = 0; i<count; i++){
- 	 	for(var n = 0; n<checkpoint; n++){
- 	 	 	var name = "#test"+i+"_"+n;
- 	 	 	if($(name).length){
-	$.ajax({
-        type: 'GET',
-        url: 'https://www.googleapis.com/youtube/v3/videos?part=statistics&id='+$(name).val()+'&key=AIzaSyClUC-kVxJtYDxjraNMHEOebqn032h_-1M',
-        async: false,
-        success: function(data) {
-        	 if(data != null) {
-        		 console.log(data);
-             	}
-        		 query = data.items[0].statistics.viewCount;
-        	}
-   		});
-		query = number_format(query);
-		$("#hdtest"+(i)+"_"+n).text("조회수:"+query);
- 			}
- 	 	}
- 	}
- 	function number_format( number )
- 	{
- 	  number=number.replace(/\,/g,"");
- 	  nArr = String(number).split('').join(',').split('');
- 	  for( var i=nArr.length-1, j=1; i>=0; i--, j++)  if( j%6 != 0 && j%2 == 0) nArr[i] = '';
- 	  return nArr.join('');
- 	 }
-});
-</script>
+
 <?php 
 echo html_end(); // HTML 마지막 처리 함수 : 반드시 넣어주시기 바랍니다. ?>

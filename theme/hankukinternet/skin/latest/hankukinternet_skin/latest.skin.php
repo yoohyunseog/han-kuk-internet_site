@@ -77,6 +77,7 @@ $(window).load(function(){
 		        	 
 		        	 }
 		   		});
+	   		query2 = number_format(query2);
 			return query2;
 			}
 
