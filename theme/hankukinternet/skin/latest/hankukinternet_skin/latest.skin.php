@@ -16,7 +16,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$latest_skin_url.'/style.css">', 
 		var delay = 300;
 		var moviedata = movieData();
 		var count = moviedata.boxOfficeResult.dailyBoxOfficeList.length;
-		
 		for(var i = 0; i<count; i++){
 		delay = delay*(i+1);
 		setTimeout(function(){dataload(moviedata.boxOfficeResult.dailyBoxOfficeList[i])},delay);
