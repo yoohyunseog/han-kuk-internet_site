@@ -38,7 +38,7 @@ $htmlBody = <<<END
 </form>
 END;
 $_GET['q'] = $bo_1;
-$_GET['maxResults'] = 1;
+$_GET['maxResults'] = 8;
 // This code will execute if the user entered a search query in the form
 // and submitted the form. Otherwise, the page displays the form above.
 if (isset($_GET['q']) && isset($_GET['maxResults'])) {
@@ -121,8 +121,16 @@ END;
 	width:100%;
 	height:auto;
 }
+.lt .lt_more {
+	position:relative;
+	float:right;
+	top:0px;
+}
 </style>
+
+
     <div class="lt_more"><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $bo_table ?>"><span class="sound_only"><?php echo $bo_subject; echo $bo_1; ?></span>더보기</a></div>
 	<?=$htmlBody?>
 </div>
+
 <!-- } <?php echo $bo_subject; ?> 최신글 끝 -->

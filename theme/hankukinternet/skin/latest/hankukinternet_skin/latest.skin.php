@@ -8,18 +8,22 @@ add_stylesheet('<link rel="stylesheet" href="'.$latest_skin_url.'/style.css">', 
 
 //페이지 데이터 모두 로딩되면 로드
 $(window).load(function(){
+	
 		var bo_table = '<?=$bo_table?>';
 		var key = '<?=$bo_10?>';
-		var key1 = '<?=$bo_9?>';
+		var key1 = '6e05d21ca6087df839db317c3579599c';
 		var dataSub;
 		var delay = 100;
 		var moviedata = movieData();
 		var count = moviedata.boxOfficeResult.dailyBoxOfficeList.length;
+		
 		var count1 = 0;
+		
 		for(var i = 0; i<count; i++){
 		delay = delay*(i+1); 
 		//setTimeout(function(){dataload(moviedata.boxOfficeResult.dailyBoxOfficeList[i])},delay);
 		dataload(moviedata.boxOfficeResult.dailyBoxOfficeList[i].movieNm,i);
+		
 		count1++;
 		}
 		
@@ -43,7 +47,7 @@ $(window).load(function(){
 		 if($('#li_test'+movie_count).length==0){
 			 //<param id="%s_%s" value="%s"><li id="li_%s"><img src="%s"><br>%s <br>날짜:%s <br><hd id="hd%s_%s">조회수:0</hd></li>
 			 var viewcount = viewCount(video_id);
-			$(".lt ul").append('<parma id="'+bo_table+'_'+movie_count+'" value="'+video_id+'"><li id="li_test'+movie_count+'"><img src='+images+'><br>'+str1+'<br><hd id="">조회수:'+viewcount+'</hd></li>');
+			$(".lt #movie_1").append('<li id="li_test'+movie_count+'"><img src='+images+'><br>'+str1+'<br><hd id="">조회수:'+viewcount+'</hd></li>');
 		 }
 		}
 		
@@ -51,15 +55,17 @@ $(window).load(function(){
 			var query1;
 			$.ajax({
 		        type: 'GET',
-		        url: 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key='+key1+'&targetDt=20170312',
+		        url: 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key='+key1+'&targetDt=20170311',
 		        async: false,
 		        success: function(data) {
 		        	 if(data != null) {
 		        		 console.log(data);
 		             }
+		        	
 		             query1 = data;
 		        }
 		   });
+		
 		return query1;
 		}
 		
@@ -100,19 +106,24 @@ $(window).load(function(){
 	text-overflow: ellipsis;
 	white-space: nowrap; 
 }
-#li_test img {
+.lt li img {
 	width:150px;
 }
 .lt{
 	width:100%;
 	height:auto;
 }
+.lt .lt_more {
+	position:relative;
+	float:right;
+	top:0px;
+}
 </style>	
 	
 <!-- <?php echo $bo_subject; ?> 최신글 시작 { -->
 <div class="lt">
     <strong class="lt_title"><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $bo_table ?>"><?php echo $bo_subject; ?></a></strong>
-    <ul>
+    <ul id="movie_1">
     
     </ul>
     <div class="lt_more"><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $bo_table ?>"><span class="sound_only"><?php echo $bo_subject ?></span>더보기</a></div>
