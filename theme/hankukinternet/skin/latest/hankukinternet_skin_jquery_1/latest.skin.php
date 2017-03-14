@@ -10,6 +10,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$latest_skin_url.'/style.css">', 
      <ul id="movie_1">
     <script type="text/javascript">
     var count = 0;
+	var rENDER_START = 50; //rENDER 함수 // 스타트 타이머 
+	var rENDER_END = 800;  //rENDER 함수 // 종료 타이머 
+	
       function makeRequest(q) {
           var day = new Date();
           var today = day.toISOString();
@@ -20,6 +23,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$latest_skin_url.'/style.css">', 
           q: q,
           part: 'snippet',
           order: 'viewcount',
+          type: 'video',
           publishedAfter: subday,
           publishedBefore: today,
           maxResults: 1
@@ -29,13 +33,33 @@ add_stylesheet('<link rel="stylesheet" href="'.$latest_skin_url.'/style.css">', 
           var resultItems = response.result.items;
           $.each(resultItems, function(index, item) {
             vidTitle = "<br><td>"+item.snippet.title+"</td></br>";
+            vidCount = "<br></td>조회수</td></br>";
+            vidId = item.id.videoId;
             vidThumburl =  item.snippet.thumbnails['default'].url;
             vidThumbimg = '<pre><img id="thumb" src="'+vidThumburl+'" alt="No  Image Available."></pre>';
-            $('#movie_1').append('<li>' + vidThumbimg + vidTitle +  '</li>');
+            $('#movie_1').append('<li id="'+vidId+'">' + vidThumbimg + vidTitle + vidCount + '</li>');
+            staticsRequest(vidId)
           });
         });
       }
 
+	  function staticsRequest(vidId){
+		  var viewCount;
+		  var str;
+		  var request = gapi.client.youtube.videos.list({
+	          id: vidId,
+	          part: 'id,statistics',
+	        });
+	        request.execute(function(response) {
+	        	var resultItems = response.result.items;
+	        	$.each(resultItems, function(index, item) {
+	        	viewCount = item.statistics.viewCount;
+	        	$('#'+vidId).append("<br><td>조회수: "+viewCount+"</td></br>");
+	            });
+	        });
+	        return viewCount;
+	  }
+	  
       //교차 함수 로직 - > rENDER - start
       function idRequest(){
     	  var ftoday = new Date();
@@ -66,27 +90,22 @@ add_stylesheet('<link rel="stylesheet" href="'.$latest_skin_url.'/style.css">', 
     	        // logic
     	        if (count < str1_count) {
     	        	var dd = str.boxOfficeResult.dailyBoxOfficeList[count].movieNm;
-        			makeRequest(dd);
+        			makeRequest(dd+" "+'<?=$bo_1?>');
     	        }else {
     	        	clearInterval(rENDER);
     	        }
     	        count++;
-    	    }, 10*count);
+    	    }, rENDER_START);
       }
       
       function init() {
         gapi.client.setApiKey('<?=$bo_10?>');
-        gapi.client.load('youtube', 'v3', function() {
-          //data = jQuery.parseJSON( '{ "data": [{"name":"<?=$bo_1?>"}]}' );
-          /* $.each(data["data"], function(index, value) {
-            makeRequest(value["name"]);
-          }); */
-        });
+        gapi.client.load('youtube', 'v3');
       }
 
       //교차 함수 실행 - rENDER 타이머 - end
       function myFunction() {
-    	    setTimeout(function(){ idRequest(); }, 800);
+    	    setTimeout(function(){ idRequest(); }, rENDER_END);
     	}
     </script>
 
@@ -94,24 +113,24 @@ add_stylesheet('<link rel="stylesheet" href="'.$latest_skin_url.'/style.css">', 
 	//function 교차 함수 실행 
     myFunction()
     </script>
-	<button id="listmovie" style="" style="width:100px; height:50px;" onclick="idRequest()"></button>
+	<button id="listmovie" style="display:none;" style="width:100px; height:50px;" onclick="idRequest()"></button>
     <h1>한국인터넷.한국 - YouTube API 0.1 Test</h1>
     </ul>
    
   <style>
 .lt li {
-    width: 160px;
+    width: 250px;
     float: left;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     margin-left: 10px;
-    height: 200px;
+    height: auto;
 }
 
 .lt li img {
-	width:160px;
-	height:150px;
+	width:250px;
+	height:250px;
 }
 .lt{
 	width:100%;
