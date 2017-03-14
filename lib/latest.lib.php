@@ -57,6 +57,7 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40, $cache_time=
         $board = sql_fetch($sql);
         $bo_subject = get_text($board['bo_subject']);
         $bo_1 = get_text($board['bo_1']);
+        $bo_8 = get_text($board['bo_8']);
         $bo_9 = get_text($board['bo_9']);
         $bo_10 = get_text($board['bo_10']);
         $tmp_write_table = $g5['write_prefix'] . $bo_table; // 게시판 테이블 전체이름
@@ -68,7 +69,7 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40, $cache_time=
 
         if($cache_fwrite) {
             $handle = fopen($cache_file, 'w');
-            $cache_content = "<?php\nif (!defined('_GNUBOARD_')) exit;\n\$bo_subject='".$bo_subject."';\n\$bo_1='".$bo_1."';\n\$bo_10='".$bo_10."';\n\$bo_9='".$bo_9."';\n\$list=".var_export($list, true)."?>";
+            $cache_content = "<?php\nif (!defined('_GNUBOARD_')) exit;\n\$bo_subject='".$bo_subject."';\n\$bo_1='".$bo_1."';\n\$bo_8='".$bo_8."';\n\$bo_10='".$bo_10."';\n\$bo_9='".$bo_9."';\n\$list=".var_export($list, true)."?>";
             fwrite($handle, $cache_content);
             fclose($handle);
         }
