@@ -24,9 +24,9 @@ $(function() {
 </html>
 <script>
 $(document).ready(function(){
+	
 	var query;
-	var count = <?=$count?>;
- 	for(var i = 0; i<count; i++){
+ 	for(var i = 0; i<100; i++){
  	 	for(var n = 0; n<<?=$checkPoint?>; n++){
  	 	 	var name = "#test"+i+"_"+n;
  	 	 	if($(name).length){
@@ -41,9 +41,9 @@ $(document).ready(function(){
         		 query = data.items[0].statistics.viewCount;
         	}
    		});
- 	 
+ 	 	
 		query = number_format(query);
-	$("#hdtest"+(i)+"_"+n).text("조회수:"+query);
+	$("#vidos_ul #hdtest"+(i)+"_"+n).text("조회수:"+query);
  			}
  	 	}
  	}

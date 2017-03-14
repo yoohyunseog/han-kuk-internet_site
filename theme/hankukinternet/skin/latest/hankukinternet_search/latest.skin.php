@@ -38,7 +38,7 @@ $htmlBody = <<<END
 </form>
 END;
 $_GET['q'] = $bo_1;
-$_GET['maxResults'] = 8;
+$_GET['maxResults'] = 7;
 // This code will execute if the user entered a search query in the form
 // and submitted the form. Otherwise, the page displays the form above.
 if (isset($_GET['q']) && isset($_GET['maxResults'])) {

@@ -10,43 +10,48 @@ add_stylesheet('<link rel="stylesheet" href="'.$latest_skin_url.'/style.css">', 
 $(window).load(function(){
 	
 		var bo_table = '<?=$bo_table?>';
+		var bo_1 = '<?=$bo_1?>';
 		var key = '<?=$bo_10?>';
 		var key1 = '6e05d21ca6087df839db317c3579599c';
 		var dataSub;
-		var delay = 100;
+		var delay = 1;
 		var moviedata = movieData();
 		var count = moviedata.boxOfficeResult.dailyBoxOfficeList.length;
-		
 		var count1 = 0;
 		
-		for(var i = 0; i<count; i++){
-		delay = delay*(i+1); 
+		for(var i = 0; i<7; i++){
+		//delay = delay*(i+1); 
 		//setTimeout(function(){dataload(moviedata.boxOfficeResult.dailyBoxOfficeList[i])},delay);
-		dataload(moviedata.boxOfficeResult.dailyBoxOfficeList[i].movieNm,i);
-		
+		var movie_name = moviedata.boxOfficeResult.dailyBoxOfficeList[i].movieNm;
+		dataload(movie_name,i);
 		count1++;
 		}
 		
 		function dataload(str,movie_count){
 		$.ajax({
 	        type: 'GET',
-	        url: "https://www.googleapis.com/youtube/v3/search?part=id,snippet&publishedAfter=2017-03-03T00:00:00Z&publishedBefore=2017-03-13T00:00:00Z&maxResults=1&order=viewCount&q="+str+"&fields=items&key="+key,
+	        dataType:"json",
+	        url: "https://www.googleapis.com/youtube/v3/search?part=id,snippet&publishedAfter=2017-01-03T00:00:00Z&publishedBefore=2017-03-13T00:00:00Z&maxResults=1&order=viewCount&q="+bo_1+' '+str+"&fields=items&key="+key,
 	        async: false,
 	        success: function(data) {
 	        	 if(data != null) {
 	        		 console.log(data);
 	             	}
 	        	 dataSub = data;
+	        	
 	        	}
 	   		});
 		
 		 //$("#data").text(dataSub.items[0].snippet.title);
+		 	
 		 var str1 = dataSub.items[0].snippet.title;
-		 var images = dataSub.items[0].snippet.thumbnails.default.url;
+		 var images = dataSub.items[0].snippet.thumbnails['default'].url;
 		 var video_id = dataSub.items[0].id.videoId;
+		
 		 if($('#li_test'+movie_count).length==0){
 			 //<param id="%s_%s" value="%s"><li id="li_%s"><img src="%s"><br>%s <br>날짜:%s <br><hd id="hd%s_%s">조회수:0</hd></li>
 			 var viewcount = viewCount(video_id);
+			
 			$(".lt #movie_1").append('<li id="li_test'+movie_count+'"><img src='+images+'><br>'+str1+'<br><hd id="">조회수:'+viewcount+'</hd></li>');
 		 }
 		}
@@ -114,7 +119,6 @@ $(window).load(function(){
 	height:auto;
 }
 .lt .lt_more {
-	position:relative;
 	float:right;
 	top:0px;
 }
@@ -123,9 +127,10 @@ $(window).load(function(){
 <!-- <?php echo $bo_subject; ?> 최신글 시작 { -->
 <div class="lt">
     <strong class="lt_title"><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $bo_table ?>"><?php echo $bo_subject; ?></a></strong>
+    <div class="lt_more"><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $bo_table ?>"><span class="sound_only"><?php echo $bo_subject ?></span>더보기</a></div>
     <ul id="movie_1">
     
     </ul>
-    <div class="lt_more"><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $bo_table ?>"><span class="sound_only"><?php echo $bo_subject ?></span>더보기</a></div>
+    
 </div>
 <!-- } <?php echo $bo_subject; ?> 최신글 끝 -->
