@@ -17,7 +17,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$latest_skin_url.'/style.css">', 
           part: 'snippet',
           maxResults: 6
       });
-		alert();
+          
         request.execute(function(response) {
           $('#results').empty();
           var resultItems = response.result.items;
@@ -30,6 +30,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$latest_skin_url.'/style.css">', 
         });
       }
 
+      function idRequest(){
+      }
+      
       function search() {
         gapi.client.setApiKey('<?=$bo_10?>');
         gapi.client.load('youtube', 'v3', function() {
