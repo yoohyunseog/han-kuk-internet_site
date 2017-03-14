@@ -38,7 +38,7 @@ $htmlBody = <<<END
 </form>
 END;
 $_GET['q'] = $bo_1;
-$_GET['maxResults'] = 7;
+$_GET['maxResults'] =1;
 // This code will execute if the user entered a search query in the form
 // and submitted the form. Otherwise, the page displays the form above.
 if (isset($_GET['q']) && isset($_GET['maxResults'])) {
@@ -48,7 +48,7 @@ if (isset($_GET['q']) && isset($_GET['maxResults'])) {
    * Please ensure that you have enabled the YouTube Data API for your project.
    */
   $DEVELOPER_KEY = $bo_10;
-
+  $key = $bo_9;
   $client = new Google_Client();
   $client->setDeveloperKey($DEVELOPER_KEY);
 
@@ -56,19 +56,26 @@ if (isset($_GET['q']) && isset($_GET['maxResults'])) {
   $youtube = new Google_Service_YouTube($client);
 
   $htmlBody = '';
-  
+  $day = date('Y-m-d\TH:i:s\Z');
+  $day_month = date(m);
   //date
-  $publishedAfter = '2017-01-01T00:00:00Z';
-  $publishedBefore = '2017-03-01T00:00:00Z';
-  $check=1;
-  $array_movie = array("조작된 도시","공조","트리플 엑스 리턴즈", "더 킹", "컨택트", "발레리나", "50가지 그림자: 심연", "모아나");
-  
+  $publishedAfter = '2017-'.($day_month).'-01T00:00:00Z';
+  date_default_timezone_set("Asia/Seoul");
+  $publishedBefore = $day;
+  $array_movie = array();
+  $jsonURL = file_get_contents("http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key={$key}&targetDt=20170312");
+  $json = json_decode($jsonURL);
+  //boxOfficeResult.dailyBoxOfficeList[i].movieNm
+  for($i=2; $i<10; $i++){
+  	//echo $json->{'boxOfficeResult'}->{'dailyBoxOfficeList'}[$i]->{'movieNm'};
+  	$array_movie[$i] = $json->{'boxOfficeResult'}->{'dailyBoxOfficeList'}[$i]->{'movieNm'};
+  }
+  for($i=0; $i<count($array_movie); $i++){
   try {
-  	
     // Call the search.list method to retrieve results matching the specified
     // query term.
     $searchResponse = $youtube->search->listSearch('id,snippet', array(
-      'q' => $_GET['q'],
+      'q' => $_GET['q'].' '.$array_movie[$i],
       'maxResults' => $_GET['maxResults'],
       'order' => 'viewCount',
       'publishedAfter' => $publishedAfter,
@@ -82,17 +89,19 @@ if (isset($_GET['q']) && isset($_GET['maxResults'])) {
     foreach ($searchResponse['items'] as $searchResult) {
       switch ($searchResult['id']['kind']) {
         case 'youtube#video':
-/*         	$video_ID = $searchResult['id']['videoId'];
+         	$video_ID = $searchResult['id']['videoId'];
         	$jsonURL = file_get_contents("https://www.googleapis.com/youtube/v3/videos?id={$video_ID}&key={$DEVELOPER_KEY}&part=statistics");
         	$json = json_decode($jsonURL);
-        	$views = $json->{'items'}[0]->{'statistics'}->{'viewCount'}; */
-        	$videos .= sprintf('<param id="%s_%s" value="%s"><li id="li_%s"><img src="%s"><br>%s <br>날짜:%s <br><hd id="hd%s_%s">조회수:0</hd></li>',$bo_table,$count,$searchResult['id']['videoId'],$i,$searchResult['snippet']['thumbnails']['medium']['url'],
-        			$searchResult['snippet']['title'],$searchResult['snippet']['publishedAt'],$bo_table,$count);
+        	$views = $json->{'items'}[0]->{'statistics'}->{'viewCount'}; 
+        	
+        	$videos .= sprintf('<li id="li_%s_%s"><img src="%s"><br>%s <br>https://www.youtube.com/watch?v=XEJUkWF7m9c날짜:%s <br><hd id="hd%s_%s">조회수:%s</hd></li>',$i,$i,$searchResult['snippet']['thumbnails']['medium']['url'],
+        			$searchResult['snippet']['title'],$searchResult['snippet']['publishedAt'],$bo_table,$views,$views);
         	$count++;
+        	sleep(0.1);
          break;
       }
     }
-    
+  	
     $htmlBody .= <<<END
     <ul id="vidos_ul">$videos</ul>
 END;
@@ -103,6 +112,7 @@ END;
     $htmlBody .= sprintf('<p>An client error occurred: <code>%s</code></p>',
       htmlspecialchars($e->getMessage()));
   }
+}
 }
 ?>
 <style>
@@ -127,7 +137,6 @@ END;
 	top:0px;
 }
 </style>
-
 
     <div class="lt_more"><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $bo_table ?>"><span class="sound_only"><?php echo $bo_subject; echo $bo_1; ?></span>더보기</a></div>
 	<?=$htmlBody?>
