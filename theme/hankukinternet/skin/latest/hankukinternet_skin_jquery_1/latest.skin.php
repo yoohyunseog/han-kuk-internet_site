@@ -6,7 +6,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$latest_skin_url.'/style.css">', 
 ?>
 <!-- <?php echo $bo_subject; ?> 최신글 시작 { -->
 <div class="lt">
-    <strong class="lt_title"><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $bo_table ?>"><?php echo $bo_subject; ?></a></strong>
      <ul id="movie_1">
     <script type="text/javascript">
     var count = 0; //전역 변수
@@ -38,7 +37,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$latest_skin_url.'/style.css">', 
            	//vidYoutuI
            	vidPublishedAt = "<tr><td>등록일: "+dateF+"</td></tr>";
             vidThumburl =  item.snippet.thumbnails['default'].url;
-            vidThumbimg = '<pre><img id="thumb" src="'+vidThumburl+'" alt="No  Image Available."></pre>';
+            vidThumbimg = '<pre><img id="'+vidId+'" onclick="iframeVideo(this)" src="'+vidThumburl+'" alt="No  Image Available."></pre>';
             $('#movie_1').append('<li id="'+vidId+'"><table>' + vidThumbimg +  vidTitle + vidPublishedAt +'</table></li>');
             staticsRequest(vidId)
           });
@@ -88,12 +87,16 @@ add_stylesheet('<link rel="stylesheet" href="'.$latest_skin_url.'/style.css">', 
     		var date = str.boxOfficeResult.showRange;
     		var str1_count = str.boxOfficeResult.boxofficeType.length;
     		$('#movie_1').append("<li id='boxoffice'><table><tr><th>이번주 박스오피스 순위</th><th>제목</th></tr></li>");
+    		for(var i = 0; i<str1_count; i++){
+    			var dd = str.boxOfficeResult.dailyBoxOfficeList[i].movieNm;
+    			$("#boxoffice").append("<tr><td style='width:100px; height:35px;'>"+(i+1)+" </td><td>"+dd+"</td></tr></table>");
+    			
+				}
     		var rENDER = setInterval(function() {
     	        // logic
     	        if (count < str1_count) {
     	        	var dd = str.boxOfficeResult.dailyBoxOfficeList[count].movieNm;
-    	        	$("#boxoffice").append("<tr><td style='width:100px; height:30px;'>"+(count+1)+" </td><td>"+dd+"</td></tr></table>");
-        			makeRequest(dd+" "+'<?=$bo_1?>');
+    	        	makeRequest(dd+" "+'<?=$bo_1?>');
     	        }else {
     	        	clearInterval(rENDER);
     	        }
@@ -147,35 +150,45 @@ add_stylesheet('<link rel="stylesheet" href="'.$latest_skin_url.'/style.css">', 
       //교차 함수 실행 - rENDER 타이머 - end
       function myFunction() {
     	    setTimeout(function(){ idRequest(); }, rENDER_END);
-    	}
+      }
+  	  function iframeVideo(id){
+  			$('#movie_1 #'+id.id).append('<iframe width="310" height="315" src="//www.youtube.com/embed/Od6hY_50Dh0?autoplay=1" frameborder="0" allowfullscreen></iframe>')
+  			}
     </script>
 
     <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=init">
 	//function 교차 함수 실행 
     myFunction()
     </script>
-	<button id="listmovie" style="display:none;" style="width:100px; height:50px;" onclick="idRequest()"></button>
-    <h1>한국인터넷.한국 - YouTube API 0.1 Test</h1>
+	<button id="listmovie" style="width:100px; height:50px;">현재 상영작</button>
+	<button id="listmovie" style="width:100px; height:50px;">개봉 예정작</button>
+    <strong class="lt_title"><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $bo_table ?>"><?php echo $bo_subject; ?></a></strong>
+    
     </ul>
    
   <style>
 .lt li {
-    width: 250px;
+    width: 300px;
     float: left;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     margin-left: 10px;
     height: auto;
+    
 }
 
 .lt li img {
-	width:250px;
+	width:300px;
 	height:250px;
 }
 .lt{
 	width:100%;
 	height:auto;
+}
+.lt ul,h1{
+	list-style:none;
+	
 }
 .lt_more {
 	position:relative;
